@@ -104,7 +104,7 @@ class ImportC2D:
             try:
                 parent = c['group_id'][0]
             except IndexError:
-                parent = ''
+                parent = False
             self.SubElement(self.group_elements[parent],tag,attrs)
 
     def add_curves(self,c2d):
@@ -124,7 +124,7 @@ class ImportC2D:
             try:
                 parent = c['group_id'][0]
             except IndexError:
-                parent = ''
+                parent = False
             self.SubElement(self.group_elements[parent],tag,attrs)
 
     def add_rects(self,c2d):
@@ -144,7 +144,7 @@ class ImportC2D:
             try:
                 parent = r['group_id'][0]
             except IndexError:
-                parent = ''
+                parent = False
             self.SubElement(self.group_elements[parent],tag,attrs)
 
     def add_polys(self,c2d):
@@ -162,7 +162,7 @@ class ImportC2D:
             try:
                 parent = p['group_id'][0]
             except IndexError:
-                parent = ''
+                parent = False
             self.SubElement(self.group_elements[parent],tag,attrs)
 
     def add_texts(self,c2d):
@@ -186,7 +186,7 @@ class ImportC2D:
             try:
                 parent = t['group_id'][0]
             except IndexError:
-                parent = ''
+                parent = False
             self.SubElement(self.group_elements[parent],tag,attrs)
 
     def next_id(self):
