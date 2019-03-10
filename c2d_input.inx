@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+	<_name>C2D Import</_name>
+	<id>com.ClayJar.C2DImport</id>
+	<dependency type="executable" location="extensions">c2d_input.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<param name="tab" type="notebook">
+		<page name="options" _gui-text="Options">
+			<_param name="as_paths" type="boolean" _gui-text="Import all shapes as paths.">true</_param>
+			<_param name="inputhelp" type="description" xml:space="preserve">
+If you uncheck this option, circles and rectangles with
+"Square" or "Fillet" corners will be imported as shapes.
+All other objects are always imported as paths.</_param>
+			<param name="sep1" type="description">-----------------------------------------------------------------</param>
+			<_param name="textwarning" type="description" xml:space="preserve">
+NOTE: Text from older versions of Carbide Create may not be
+successfully imported.  Simply open the C2D file in Carbide
+Create version 316 or later and save.</_param>
+		</page>
+		<page name="help" _gui-text="Help">
+			<_param name="helptext" type="description" xml:space="preserve">
+Notes:
+- Grouping is preserved.
+- All objects are imported as paths (except as noted).
+- Rendered text (Carbide Create 316 or later) is imported.
+- A background rectangle showing the stock is added.
+- Toolpath information is not imported.
+
+Homepage:  https://github.com/ClayJarCom/C2DImport
+</_param>
+		</page>
+	</param>
+	<input>
+		<extension>.c2d</extension>
+		<mimetype>image/x-carbide-create</mimetype>
+		<_filetypename>Carbide Create file (*.c2d)</_filetypename>
+		<_filetypetooltip>Import Carbide Create C2D Format</_filetypetooltip>
+	</input>
+	<script>
+		<command reldir="extensions" interpreter="python">c2d_input.py</command>
+	</script>
+</inkscape-extension>
