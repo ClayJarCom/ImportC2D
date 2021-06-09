@@ -12,9 +12,12 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 """
 import inkex
-from StringIO import StringIO
+from io import StringIO
 from math import sin,cos,pi
+from lxml import etree
 import json
+import optparse
+import sys
 
 class ImportC2D:
     """ Import a Carbide Create C2D file and process it into an SVG."""
@@ -27,14 +30,14 @@ class ImportC2D:
     def __init__(self,c2d_file,as_paths):
         """ Load a C2D file and process it into an SVG. """
         self.as_paths = as_paths
-        self.SubElement = inkex.etree.SubElement
+        self.SubElement = etree.SubElement
 
         with open(c2d_file,'r') as f:
             c2d = json.load(f)
         
         width = c2d['DOCUMENT_VALUES']['WIDTH']
         height = c2d['DOCUMENT_VALUES']['HEIGHT']
-        self.svg = inkex.etree.parse(StringIO(
+        self.svg = etree.parse(StringIO(
             '<svg xmlns="http://www.w3.org/2000/svg" width="{0}mm" '
             'height="{1}mm" viewBox="0 0 {0} {1}"/>'.format(width,height)))
         
@@ -452,7 +455,7 @@ class ImportC2D:
         return self.path(path_data)
         
 if __name__ == '__main__':
-    parser = inkex.optparse.OptionParser(usage="usage: %prog [-p] C2Dfile",
+    parser = optparse.OptionParser(usage="usage: %prog [-p] C2Dfile",
                                          option_class=inkex.InkOption)
     parser.add_option('-p', '--as_paths', action='store',
                       help='Import all objects as paths.', default=False)
@@ -463,7 +466,7 @@ if __name__ == '__main__':
     parser.add_option('--inputhelp', action='store')
     parser.add_option('--textwarning', action='store')
     parser.add_option('--helptext', action='store')
-    (options, args) = parser.parse_args(inkex.sys.argv[1:])
+    (options, args) = parser.parse_args(sys.argv[1:])
     
     # The File/Import... dialog only allows importing a single file at a time,
     # and the fully-qualified filename is passed as the first positional
@@ -473,4 +476,4 @@ if __name__ == '__main__':
     # An Inkscape input extension does whatever it needs to do with the input
     # file and then writes an SVG to stdout.  Inkscape takes this as input and
     # creates a new layer out of the contents of the SVG.
-    c2d.svg.write(inkex.sys.stdout)
+    c2d.svg.write(sys.stdout.buffer)
